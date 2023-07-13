@@ -1,0 +1,123 @@
+/*
+Animation
+- animation (Short hand)
+- animation-name
+- animation-duration
+- animation-timing-function
+- animation-delay
+
+@keyframes animation-name {
+    statements
+}
+Eg:
+@keyframes myAnimation {
+    from {
+        properties
+    }
+    to {
+        properties
+    }
+}
+
+@keyframes myAnimation {
+    0% {
+        properties
+    }
+
+    x% {
+        properties
+    }
+
+    y% {
+        properties
+    }
+    
+    .
+    .
+    .
+    .
+
+    n% {
+        Here n is less than 100
+        properties
+    }
+
+    100% {
+        properties
+    }
+}
+*/
+
+#logo img {
+    animation: rotate 3s ease-in-out 0s forwards;
+}
+
+#bannerPicture, #navItems {
+    animation: fade 3s ease-in-out 0s forwards;
+}
+
+#bannerName h1 {
+    animation: fyarra 3s ease-in-out;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+@keyframes fade {
+    from{
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fyarra {
+    0% {
+        transform: translate(100px);
+        opacity: 0;
+        letter-spacing: 20px;
+    }
+    50% {
+        transform: translate(75px);
+        opacity: 0.5;
+        letter-spacing: 14px;
+    }
+
+    100% {
+        transform: translate(0);
+        opacity: 1;
+        letter-spacing: unset;
+    }
+}
+
+#bannerSocial a {
+    transition: all 0.3s linear;
+}
+
+#bannerSocial a:hover {
+    border-radius: 0.5rem;
+    transform: scale(1.25, 1.25);
+    animation: socialicons 1s infinite 0.3s;
+}
+
+@keyframes socialicons {
+    0%{
+        transform: scale(1.25, 1.25);
+        border-radius: 0.5rem;
+    }
+    50%{
+        transform: scale(1.5, 1.5);
+        border-radius: 1rem;
+    }
+    100%{
+        transform: scale(1.25, 1.25);
+        border-radius: 0.5rem;
+    }
+}

@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white-color);
+    color: var(--black-color);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#wrapper, #container, #sidenav, #sidenav nav {
+    display: flex;
+}
+
+#sidenav {
+    flex-direction: column;
+    row-gap: 2rem;
+    padding: 2rem;
+    background: var(--offwhite-color);
+}
+
+#navlogo {
+    height: 3rem;
+}
+
+#navlogo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+}
+
+#navsearch {
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: 100;
+}
+
+#navsearch label {
+    color: var(--grey-color);
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    appearance:unset;
+    border: none;
+    outline: none;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+#sidenav nav {
+    flex-direction: column;
+    row-gap: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--grey-color);
+}
+
+#sidenav nav a {
+    padding: 0 0.75rem;
+}
+
+#sidenav nav a.active {
+    border-left: 4px solid var(--primary-color);
+    color: var(--black-color);
+}
+
+#container {
+    flex-grow: 1;
+}

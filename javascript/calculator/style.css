@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+#calculator {
+  background: #212121;
+  color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  box-shadow: 2px 2px 4px #cacaca;
+}
+
+#display {
+  height: 12rem;
+  color: #ffffff;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+#display[data-status="on"] #displayContent::after {
+  content: "|";
+  animation: 1s linear 0s infinite forwards blink;
+}
+
+#display[data-status="off"] #displayContent::after {
+  content: "Click Power to Turn On";
+}
+
+#buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.buttons-row {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.calc-btn {
+  outline: none;
+  border: none;
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 2rem;
+  color: #fff;
+  background: #eaeaea;
+  box-shadow: 2px 2px 4px #111111;
+  transition: all linear 150ms;
+}
+
+.calc-btn:hover {
+  transform: scale(1.025);
+}
+
+.calc-btn:active {
+  opacity: 0.8;
+}
+
+.calc-btn.operator {
+  background: #e9a933;
+}
+
+.calc-btn.digit {
+  background: #312828;
+}
+
+.calc-btn[data-action="equals"] {
+  background: indigo;
+}
+
+.calc-btn[data-action="power"][data-status="on"] {
+  background: #9d1414;
+}
+
+.calc-btn[data-action="power"][data-status="off"] {
+  background: #0a790a;
+}
+
+.calc-btn[data-action="clear"] {
+  color: #9d1414;
+}
+
+.calc-btn[data-action="backspace"] {
+  color: #877409;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
