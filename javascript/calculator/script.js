@@ -1,5 +1,6 @@
-let calcStatus = false;
-
+const state = {
+  status: false,
+};
 /**
  * How to fetch HTML Elements in js
  */
@@ -14,13 +15,41 @@ let calcStatus = false;
 // console.log(element);
 
 const powerBtn = document.querySelector('.calc-btn[data-action="power"]');
-const display = document.getElementById('display');
+const display = document.getElementById("display");
+const displayContent = document.getElementById("displayContent");
+
 console.log(powerBtn);
-powerBtn.addEventListener('click', () => {
-    if(powerBtn.dataset.status === "on") {
-        powerBtn.dataset.status = "off";
-    } else {
-        powerBtn.dataset.status = "on";
-    }
+powerBtn.addEventListener("click", () => {
+  displayContent.innerText = "";
+  state.status = !state.status;
+  if (!state.status) {
+    powerBtn.dataset.status = "off";
     display.dataset.status = powerBtn.dataset.status;
+    return;
+  }
+  powerBtn.dataset.status = "on";
+  display.dataset.status = powerBtn.dataset.status;
+  return;
 });
+
+const digitBtns = document.getElementsByClassName("digit");
+
+for (btn of digitBtns) {
+  btn.addEventListener("click", (e) => {
+    if (state.status) {
+      const target = e.target;
+      displayContent.innerText += target.dataset.value;
+    }
+  });
+}
+
+const opBtns = document.getElementsByClassName("operator");
+
+for (btn of opBtns) {
+  btn.addEventListener("click", (e) => {
+    if (state.status) {
+      const target = e.target;
+      displayContent.innerText += target.dataset.value;
+    }
+  });
+}
