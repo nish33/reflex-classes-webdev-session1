@@ -255,10 +255,10 @@
                 Dolorem culpa vitae maiores nobis velit eaque architecto nobis facere.</span>
         </div>
         <!-- Contact Form -->
-        <form>
+        <form id="contactForm">
             <input type="text" placeholder="Enter Your Name*" name="fullname" required />
             <input type="email" placeholder="Enter Your Email*" name="email" required />
-            <input type="number" placeholder="Phone Number" name="phone" minlength="9" maxlength="13" />
+            <input type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Phone Number" name="phone" minlength="9" maxlength="13" />
             <textarea name="message" id="message" cols="30" rows="5" placeholder="Your Message*" required></textarea>
             <input class="btn btn-dark" type="submit" value="Submit" />
         </form>

@@ -17,7 +17,9 @@ const submitBtn = document.querySelector('input[type="submit"]');
 
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  if(!validateFields()) return;
   const prevData = JSON.parse(localStorage.getItem("portfolioContactFormData"));
+  console.log(prevData);
 
   if (prevData && prevData.length > 0) {
     prevData.push({
@@ -25,12 +27,11 @@ submitBtn.addEventListener("click", (e) => {
       name: document.querySelector('input[name="fullname"]').value,
       email: document.querySelector('input[name="email"]').value,
       phone: document.querySelector('input[name="phone"]').value,
-      phone: document.getElementById("message").value,
+      message: document.getElementById("message").value,
     });
-    return localStorage.setItem(
-      "portfolioContactFormData",
-      JSON.stringify(prevData)
-    );
+    localStorage.setItem("portfolioContactFormData", JSON.stringify(prevData));
+    document.querySelector('input[name="phone"]').value = "";
+    return document.getElementById("contactForm").reset();
   }
 
   const data = [
@@ -39,8 +40,10 @@ submitBtn.addEventListener("click", (e) => {
       name: document.querySelector('input[name="fullname"]').value,
       email: document.querySelector('input[name="email"]').value,
       phone: document.querySelector('input[name="phone"]').value,
-      phone: document.getElementById("message").value,
+      message: document.getElementById("message").value,
     },
   ];
-  return localStorage.setItem("portfolioContactFormData", JSON.stringify(data));
+  localStorage.setItem("portfolioContactFormData", JSON.stringify(data));
+  document.querySelector('input[name="phone"]').value = "";
+  return document.getElementById("contactForm").reset();
 });
