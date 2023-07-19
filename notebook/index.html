@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notebook</title>
+    <link rel="stylesheet" href="./assets/css/vars.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Lato:wght@100;300;400;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="container">
+        <nav id="topnav">
+            <ul id="navlist">
+                <li class="nav-item btn btn-primary" data-target="all">ToDo</li>
+                <li class="nav-item btn btn-primary btn-outline" data-target="complete">Completed</li>
+                <li class="nav-item btn btn-primary btn-outline" data-target="incomplete">Incomplete</li>
+            </ul>
+            <button class="btn btn-success" data-toggle="modal" data-target="createNoteFormModal">
+                + Create New
+            </button>
+        </nav>
+        <div id="cardsContainer">
+            <div class="note-card">
+                <div class="note-date">
+                    <span class="note-date-month">Jul</span>
+                    <span class="note-date-day">19</span>
+                    <span class="note-date-year">2023</span>
+                </div>
+                <div class="note-content">
+                    <div class="note-title">
+                        <h3 class="title-text">Title</h3>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                    <div class="note-description">
+                        <span>Porro debitis qui ut sit aperiam. Asperiores excepturi eos expedita omnis rem consequatur
+                            aspernatur minus inventore.</span>
+                    </div>
+                    <div class="note-action">
+                        <label for="moveNoteSelect1">Move To:</label>
+                        <select name="moveNote" id="moveNoteSelect1">
+                            <option value="incomplete">Incomplete</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="note-card">
+                <div class="note-date">
+                    <span class="note-date-month">Jul</span>
+                    <span class="note-date-day">19</span>
+                    <span class="note-date-year">2023</span>
+                </div>
+                <div class="note-content">
+                    <div class="note-title">
+                        <h3 class="title-text">Title</h3>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                    <div class="note-description">
+                        <span>Porro debitis qui ut sit aperiam. Asperiores excepturi eos expedita omnis rem consequatur
+                            aspernatur minus inventore.</span>
+                    </div>
+                    <div class="note-action">
+                        <label for="moveNoteSelect2">Move To:</label>
+                        <select name="moveNote" id="moveNoteSelect2">
+                            <option value="incomplete">Incomplete</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="note-card">
+                <div class="note-date">
+                    <span class="note-date-month">Jul</span>
+                    <span class="note-date-day">19</span>
+                    <span class="note-date-year">2023</span>
+                </div>
+                <div class="note-content">
+                    <div class="note-title">
+                        <h3 class="title-text">Title</h3>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </div>
+                    <div class="note-description">
+                        <span>Porro debitis qui ut sit aperiam. Asperiores excepturi eos expedita omnis rem consequatur
+                            aspernatur minus inventore.</span>
+                    </div>
+                    <div class="note-action">
+                        <label for="moveNoteSelect3">Move To:</label>
+                        <select name="moveNote" id="moveNoteSelect3">
+                            <option value="incomplete">Incomplete</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal hide" id="createNoteFormModal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <h2 class="title-text">Create New Note</h2>
+                <button class="btn btn-outline btn-danger" data-toggle="modal" data-target="createNoteFormModal">
+                    x
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createNoteForm">
+                    <div class="form-group">
+                        <label for="createNoteTitle">Title:</label>
+                        <input type="text" name="createNoteTitle" id="createNoteTitle" placeholder="Eg. Learn HTML" />
+                    </div>
+                    <div class="form-group">
+                        <label for="createNoteDescription">Description:</label>
+                        <textarea name="createNoteDescription" id="createNoteDescription" cols="30" rows="10"
+                            placeholder="Write in less than 100 characters"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-toggle="modal" data-target="createNoteFormModal">
+                    Cancel
+                </button>
+                <button class="btn btn-success">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

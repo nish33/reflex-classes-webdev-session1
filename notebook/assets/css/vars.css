@@ -1,0 +1,17 @@
+:root {
+  --danger-color: #e21717;
+  --danger-color-transparent: #e2171768;
+  --success-color: #669012;
+  --success-color-transparent: #66901268;
+  --primary-color: #551b90;
+  --primary-color-transparent: #551b9068;
+  --off-white-color: #f7f7f7;
+  --white-color: #ffffff;
+  --dark-color: #212121;
+  --grey-color: #919191;
+  --upper-box-shadow: 2px 2px 4px #e7e7e7;
+  --lower-box-shadow: -2px -2px 4px #e7e7e7;
+  --border-radius-lg: 0.5rem;
+  --border-radius-md: 0.375rem;
+  --border-radius-sm: 0.25rem;
+}
