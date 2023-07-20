@@ -1,213 +1,252 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Lato', sans-serif;
-    background: var(--off-white-color);
+  font-family: "Lato", sans-serif;
+  background: var(--off-white-color);
+  overflow: hidden;
 }
 
 .title-text {
-    font-family: 'Belanosima', sans-serif;
-    font-weight: 400;
+  font-family: "Belanosima", sans-serif;
+  font-weight: 400;
 }
 
 .btn {
-    appearance: none;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: var(--border-radius-sm);
-    outline: none;
-    padding: 0.5rem 0.75rem;
-    width: max-content;
-    height: max-content;
-    cursor: pointer;
+  appearance: none;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: var(--border-radius-sm);
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  width: max-content;
+  height: max-content;
+  cursor: pointer;
 }
 
 .btn-sm {
-    padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem !important;
 }
 
 .btn-outline {
-    background: var(--off-white-color) !important;
+  background: transparent !important;
 }
 
 .btn-primary {
-    background: var(--primary-color-transparent);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+  background: var(--primary-color-transparent);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .btn-success {
-    background: var(--success-color-transparent);
-    border-color: var(--success-color);
-    color: var(--success-color);
+  background: var(--success-color-transparent);
+  border-color: var(--success-color);
+  color: var(--success-color);
 }
 
 .btn-danger {
-    background: var(--danger-color-transparent);
-    border-color: var(--danger-color);
-    color: var(--danger-color);
+  background: var(--danger-color-transparent);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 label {
-    font-weight: 500;
+  font-weight: 500;
 }
 
-input, textarea {
-    font-family: inherit;
-    padding: 0.5rem 0.75rem;
+input,
+textarea {
+  font-family: inherit;
+  padding: 0.5rem 0.75rem;
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
-input:focus, textarea:focus {
-    outline-color: var(--primary-color);
+input:focus,
+textarea:focus {
+  outline-color: var(--primary-color);
 }
 
 #container {
-    width: 70%;
-    margin: 0 auto;
+  width: 70%;
+  margin: 0 auto;
+  overflow-y: auto !important;
+  height: 100vh;
+  padding-bottom: 2rem;
 }
 
 #topnav {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
 }
 
 #navlist {
-    list-style: none;
-    display: flex;
-    column-gap: 2rem;
+  display: flex;
+  column-gap: 2rem;
 }
 
 #cardsContainer {
-    display: flex;
-    flex-direction: column;
-    row-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
 }
 
 .note-card {
-    background: var(--white-color);
-    padding: 1rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--upper-box-shadow);
-    display: flex;
-    column-gap: 2rem;
+  background: var(--white-color);
+  padding: 1rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--lower-box-shadow) inset, var(--upper-box-shadow) inset;
+  display: flex;
+  column-gap: 2rem;
 }
 
 .note-date {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  align-items: center;
 }
 
-.note-date-month, .note-date-year {
-    color: var(--grey-color);
-    font-size: 500;
-    font-size: 1.2rem;
+.note-date-month,
+.note-date-year {
+  color: var(--grey-color);
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 .note-date-day {
-    color: var(--primary-color);
-    font-weight: 600;
-    font-size: 1.75rem;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.75rem;
 }
 
 .note-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  flex-grow: 1;
 }
 
 .note-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .note-title .title-text {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
-.note-action {
-    align-self: flex-end;
+.note-btns {
     display: flex;
     column-gap: 0.5rem;
     align-items: center;
 }
 
+.note-action {
+  align-self: flex-end;
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
 select[name="moveNote"] {
-    padding: 0.25rem;
-    border-radius: var(--border-radius-sm);
-    border-color: var(--primary-color);
-    border-width: 2px;
+  padding: 0.25rem;
+  border-radius: var(--border-radius-sm);
+  border-color: var(--primary-color);
+  border-width: 2px;
 }
 
 select:focus {
-    outline-color: var(--primary-color);
+  outline-color: var(--primary-color);
 }
 
 .modal {
-    width: 100vw;
-    height: 100vh;
-    background: #212121;
-    justify-content: center;
-    padding: 4rem;
+  width: 100vw;
+  height: 100vh;
+  background: #212121cc;
+  justify-content: center;
+  padding: 4rem;
+  transition: all 2s linear 1s;
 }
 
 .modal.show {
-    display: flex;
-    position: fixed;
-    top: 0;
-    z-index: 999;
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  overflow-y: auto !important;
 }
 
 .modal.hide {
-    display: none;
+  display: none;
 }
 
 .modal-content {
-    height: max-content;
-    width: max-content;
-    background-color: var(--off-white-color);
-    border-radius: var(--border-radius-md);
-    display: flex;
-    flex-direction: column;
+  height: max-content;
+  width: max-content;
+  min-width: 25%;
+  background-color: var(--off-white-color);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-100vh);
 }
-.modal-title, .modal-body, .modal-footer {
-    padding: 1rem;
-    display: flex;
+
+.modal.show .modal-content {
+  animation: slideFromTop 1s ease-in-out forwards;
+}
+
+.modal-title,
+.modal-body,
+.modal-footer {
+  padding: 1rem;
+  display: flex;
 }
 
 .modal-title {
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--grey-color);
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--grey-color);
 }
 
 .modal-footer {
-    align-self: flex-end;
-    column-gap: 1rem;
+  align-self: flex-end;
+  column-gap: 1rem;
 }
 
 #createNoteForm {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+@keyframes slideFromTop {
+  0% {
+    transform: translateY(-100vh);
+  }
+  90% {
+    transform: unset;
+  }
+  95% {
+    transform: translateY(-1vh);
+  }
+  100% {
+    transform: unset;
+  }
 }
