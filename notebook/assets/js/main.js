@@ -1,5 +1,19 @@
 const localStorageNotesId = "notebook_tCHaPLrao4H6xp67YsL5rHEL_notes";
 const dateObj = new Date();
+const monthsArr = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const toggleModal = (modal) => {
   const target = document.getElementById(modal);
@@ -54,8 +68,8 @@ createNoteSaveBtn.addEventListener("click", (e) => {
       "*Title is required!";
     document
       .querySelector("#createNoteTitle")
-      .addEventListener("change", (e) => {
-        if (e.target === "" || !e.target || e.target === null) {
+      .addEventListener("input", (e) => {
+        if (e.target.value === "" || !e.target.value || e.target.value === null) {
           return (document.querySelector(
             "#createNoteTitle + .validation-msg"
           ).innerText = "*Title is required!");
@@ -75,8 +89,8 @@ createNoteSaveBtn.addEventListener("click", (e) => {
     ).innerText = "*Description is required!";
     document
       .querySelector("#createNoteDescription")
-      .addEventListener("change", (e) => {
-        if (e.target === "" || !e.target || e.target === null) {
+      .addEventListener("input", (e) => {
+        if (e.target.value === "" || !e.target.value || e.target.value === null) {
           return (document.querySelector(
             "#createNoteDescription + .validation-msg"
           ).innerText = "*Description is required!");
@@ -110,10 +124,60 @@ createNoteSaveBtn.addEventListener("click", (e) => {
     prevDataArr.push(noteData);
 
     localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
+    listAllNotes();
     return toggleModal("createNoteFormModal");
   }
 
   const data = [noteData];
   localStorage.setItem(localStorageNotesId, JSON.stringify(data));
+  listAllNotes();
   return toggleModal("createNoteFormModal");
 });
+
+const listAllNotes = () => {
+  const allNotesFromLocalStorage = localStorage.getItem(localStorageNotesId);
+  const allNotesArr = allNotesFromLocalStorage
+    ? JSON.parse(allNotesFromLocalStorage)
+    : null;
+
+  const notesContainer = document.getElementById("cardsContainer");
+  notesContainer.innerHTML = "";
+  if(allNotesArr) {
+    allNotesArr.forEach((note) => {
+      notesContainer.innerHTML += `
+      <div class="note-card">
+        <div class="note-date">
+          <span class="note-date-month">${monthsArr[note.created.month]}</span>
+          <span class="note-date-day">${note.created.day}</span>
+          <span class="note-date-year">${note.created.year}</span>
+        </div>
+        <div class="note-content">
+          <div class="note-title">
+            <h3 class="title-text">${note.title}</h3>
+            <div class="note-btns">
+              <button class="btn btn-sm btn-primary edit-btn" data-toggle="modal"
+                  data-target="editNoteFormModal" data-id="${note.id}">&#x270F; Edit</button>
+              <button class="btn btn-sm btn-danger" data-toggle="modal"
+                  data-target="deleteNoteDialogModal" data-id="${note.id}">&#x1F6AB; Delete</button>
+            </div>
+          </div>
+          <div class="note-description">
+            <span>${note.description}</span>
+          </div>
+          <div class="note-action">
+            <label for="${note.id}">Move To:</label>
+            <select name="moveNote" id="${note.id}">
+              <option value="0">Incomplete</option>
+              <option value="1">Completed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      `;
+    });
+    return;
+  }
+  notesContainer.innerHTML = `<h3>No Notes Found.</h3>`;
+  return;
+};
+listAllNotes();
