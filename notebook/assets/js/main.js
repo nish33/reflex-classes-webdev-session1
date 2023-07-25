@@ -56,7 +56,11 @@ createNoteSaveBtn.addEventListener("click", (e) => {
     document
       .querySelector("#createNoteTitle")
       .addEventListener("input", (e) => {
-        if (e.target.value === "" || !e.target.value || e.target.value === null) {
+        if (
+          e.target.value === "" ||
+          !e.target.value ||
+          e.target.value === null
+        ) {
           return (document.querySelector(
             "#createNoteTitle + .validation-msg"
           ).innerText = "*Title is required!");
@@ -77,7 +81,11 @@ createNoteSaveBtn.addEventListener("click", (e) => {
     document
       .querySelector("#createNoteDescription")
       .addEventListener("input", (e) => {
-        if (e.target.value === "" || !e.target.value || e.target.value === null) {
+        if (
+          e.target.value === "" ||
+          !e.target.value ||
+          e.target.value === null
+        ) {
           return (document.querySelector(
             "#createNoteDescription + .validation-msg"
           ).innerText = "*Description is required!");
@@ -129,7 +137,7 @@ const listAllNotes = () => {
 
   const notesContainer = document.getElementById("cardsContainer");
   notesContainer.innerHTML = "";
-  if(allNotesArr) {
+  if (allNotesArr) {
     allNotesArr.forEach((note) => {
       notesContainer.innerHTML += `
       <div class="note-card">
@@ -143,9 +151,13 @@ const listAllNotes = () => {
             <h3 class="title-text">${note.title}</h3>
             <div class="note-btns">
               <button class="btn btn-sm btn-primary edit-btn" data-toggle="modal"
-                  data-target="editNoteFormModal" data-id="${note.id}">&#x270F; Edit</button>
+                  data-target="editNoteFormModal" data-id="${
+                    note.id
+                  }">&#x270F; Edit</button>
               <button class="btn btn-sm btn-danger" data-toggle="modal"
-                  data-target="deleteNoteDialogModal" data-id="${note.id}">&#x1F6AB; Delete</button>
+                  data-target="deleteNoteDialogModal" data-id="${
+                    note.id
+                  }">&#x1F6AB; Delete</button>
             </div>
           </div>
           <div class="note-description">
@@ -170,23 +182,108 @@ const listAllNotes = () => {
 listAllNotes();
 
 const initializeNoteData = (id) => {
-  const localStorageData = JSON.parse(localStorage.getItem(localStorageNotesId));
+  const localStorageData = JSON.parse(
+    localStorage.getItem(localStorageNotesId)
+  );
 
   const currentNote = localStorageData.find((note) => {
     return note.id === id;
   });
   console.log(currentNote);
-  document.getElementById('editNoteTitle').value = currentNote.title;
-  document.getElementById('editNoteDescription').value = currentNote.description;
+  document.getElementById("currentNoteId").value = currentNote.id;
+  document.getElementById("editNoteTitle").value = currentNote.title;
+  document.getElementById("editNoteDescription").value =
+    currentNote.description;
   return;
-}
+};
 
-const editNoteBtns = document.querySelectorAll('.edit-btn');
+const editNoteBtns = document.querySelectorAll(".edit-btn");
 editNoteBtns.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener("click", (e) => {
     const targetNote = e.target.dataset.id;
     initializeNoteData(targetNote);
   });
+});
+
+const editNoteSaveBtn = document.getElementById("editNoteSaveBtn");
+editNoteSaveBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const title = document.querySelector("#editNoteTitle").value;
+  const description = document.querySelector("#editNoteDescription").value;
+  const id = document.getElementById("currentNoteId").value;
+
+  if (title === "" || !title || title === null) {
+    document.querySelector("#editNoteTitle + .validation-msg").innerText =
+      "*Title is required!";
+    document.querySelector("#editNoteTitle").addEventListener("input", (e) => {
+      if (e.target.value === "" || !e.target.value || e.target.value === null) {
+        return (document.querySelector(
+          "#editNoteTitle + .validation-msg"
+        ).innerText = "*Title is required!");
+      } else {
+        return (document.querySelector(
+          "#editNoteTitle + .validation-msg"
+        ).innerText = "");
+      }
+    });
+    return;
+  }
+  document.querySelector("#editNoteTitle + .validation-msg").innerText = "";
+
+  if (description === "" || !description || description === null) {
+    document.querySelector("#editNoteDescription + .validation-msg").innerText =
+      "*Description is required!";
+    document
+      .querySelector("#editNoteDescription")
+      .addEventListener("input", (e) => {
+        if (
+          e.target.value === "" ||
+          !e.target.value ||
+          e.target.value === null
+        ) {
+          return (document.querySelector(
+            "#editNoteDescription + .validation-msg"
+          ).innerText = "*Description is required!");
+        } else {
+          return (document.querySelector(
+            "#editNoteDescription + .validation-msg"
+          ).innerText = "");
+        }
+      });
+    return;
+  }
+  document.querySelector("#editNoteDescription + .validation-msg").innerText =
+    "";
+
+  // const noteData = {
+  //   id: document.getElementById("currentNoteId").value,
+  //   title: title,
+  //   description: description,
+  //   created: {
+  //     year: dateObj.getFullYear(),
+  //     month: dateObj.getMonth(),
+  //     day: dateObj.getDate(),
+  //   },
+  //   status: 0,
+  // };
+  const prevData = localStorage.getItem(localStorageNotesId);
+  const prevDataArr = JSON.parse(prevData);
+
+  const currentNote = prevDataArr.find((note) => {
+    return note.id === id;
+  });
+  const currentNoteIndex = prevDataArr.indexOf(currentNote);
+  
+  prevDataArr[currentNoteIndex].title = title;
+  prevDataArr[currentNoteIndex].description = description;
+  prevDataArr[currentNoteIndex].created.year = dateObj.getFullYear();
+  prevDataArr[currentNoteIndex].created.month = dateObj.getMonth();
+  prevDataArr[currentNoteIndex].created.day = dateObj.getDate();
+  
+  localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
+  listAllNotes();
+  return toggleModal("editNoteFormModal");
 });
 
 const modalToggleBtns = document.querySelectorAll(
