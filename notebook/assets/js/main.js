@@ -20,23 +20,10 @@ const toggleModal = (modal) => {
   target.classList.contains("hide")
     ? target.classList.replace("hide", "show")
     : target.classList.replace("show", "hide");
-  if (target.dataset.form) {
+  if (target.dataset.form && target.classList.contains("hide")) {
     document.getElementById(target.dataset.form).reset();
   }
 };
-
-const modalToggleBtns = document.querySelectorAll(
-  'button[data-toggle="modal"]'
-);
-
-modalToggleBtns.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const clickedBtn = e.target;
-    const modalId = clickedBtn.dataset.target;
-    toggleModal(modalId);
-    return;
-  });
-});
 
 /**
  * Expected Object
@@ -181,3 +168,36 @@ const listAllNotes = () => {
   return;
 };
 listAllNotes();
+
+const initializeNoteData = (id) => {
+  const localStorageData = JSON.parse(localStorage.getItem(localStorageNotesId));
+
+  const currentNote = localStorageData.find((note) => {
+    return note.id === id;
+  });
+  console.log(currentNote);
+  document.getElementById('editNoteTitle').value = currentNote.title;
+  document.getElementById('editNoteDescription').value = currentNote.description;
+  return;
+}
+
+const editNoteBtns = document.querySelectorAll('.edit-btn');
+editNoteBtns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const targetNote = e.target.dataset.id;
+    initializeNoteData(targetNote);
+  });
+});
+
+const modalToggleBtns = document.querySelectorAll(
+  'button[data-toggle="modal"]'
+);
+
+modalToggleBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const clickedBtn = e.target;
+    const modalId = clickedBtn.dataset.target;
+    toggleModal(modalId);
+    return;
+  });
+});

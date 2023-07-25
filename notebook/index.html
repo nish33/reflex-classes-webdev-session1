@@ -27,7 +27,7 @@
             </button>
         </nav>
         <div id="cardsContainer">
-            <div class="note-card">
+            <!-- <div class="note-card">
                 <div class="note-date">
                     <span class="note-date-month">Jul</span>
                     <span class="note-date-day">19</span>
@@ -56,67 +56,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="note-card">
-                <div class="note-date">
-                    <span class="note-date-month">Jul</span>
-                    <span class="note-date-day">19</span>
-                    <span class="note-date-year">2023</span>
-                </div>
-                <div class="note-content">
-                    <div class="note-title">
-                        <h3 class="title-text">Title</h3>
-                        <div class="note-btns">
-                            <button class="btn btn-sm btn-primary edit-btn" data-toggle="modal"
-                                data-target="editNoteFormModal"><span>&#x270F;</span> Edit</button>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="deleteNoteDialogModal">&#x1F6AB; Delete</button>
-                        </div>
-                    </div>
-                    <div class="note-description">
-                        <span>Porro debitis qui ut sit aperiam. Asperiores excepturi eos expedita omnis rem consequatur
-                            aspernatur minus inventore.
-                        </span>
-                    </div>
-                    <div class="note-action">
-                        <label for="moveNoteSelect1">Move To:</label>
-                        <select name="moveNote" id="moveNoteSelect1">
-                            <option value="incomplete">Incomplete</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="note-card">
-                <div class="note-date">
-                    <span class="note-date-month">Jul</span>
-                    <span class="note-date-day">19</span>
-                    <span class="note-date-year">2023</span>
-                </div>
-                <div class="note-content">
-                    <div class="note-title">
-                        <h3 class="title-text">Title</h3>
-                        <div class="note-btns">
-                            <button class="btn btn-sm btn-primary edit-btn" data-toggle="modal"
-                                data-target="editNoteFormModal"><span>&#x270F;</span> Edit</button>
-                            <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                data-target="deleteNoteDialogModal">&#x1F6AB; Delete</button>
-                        </div>
-                    </div>
-                    <div class="note-description">
-                        <span>Porro debitis qui ut sit aperiam. Asperiores excepturi eos expedita omnis rem consequatur
-                            aspernatur minus inventore.
-                        </span>
-                    </div>
-                    <div class="note-action">
-                        <label for="moveNoteSelect1">Move To:</label>
-                        <select name="moveNote" id="moveNoteSelect1">
-                            <option value="incomplete">Incomplete</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="modal hide" id="createNoteFormModal" data-form="createNoteForm">
@@ -164,13 +104,13 @@
             <div class="modal-body">
                 <form id="editNoteForm">
                     <div class="form-group">
-                        <label for="createNoteTitle">Title:</label>
-                        <input type="text" name="createNoteTitle" id="createNoteTitle" placeholder="Eg. Learn HTML"
+                        <label for="editNoteTitle">Title:</label>
+                        <input type="text" name="editNoteTitle" id="editNoteTitle" placeholder="Eg. Learn HTML"
                             required />
                     </div>
                     <div class="form-group">
-                        <label for="createNoteDescription">Description:</label>
-                        <textarea name="createNoteDescription" id="createNoteDescription" cols="30" rows="10"
+                        <label for="editNoteDescription">Description:</label>
+                        <textarea name="editNoteDescription" id="editNoteDescription" cols="30" rows="10"
                             placeholder="Write in less than 100 characters" required></textarea>
                     </div>
                 </form>
