@@ -14,7 +14,6 @@ const monthsArr = [
   "Nov",
   "Dec",
 ];
-
 const toggleModal = (modal) => {
   const target = document.getElementById(modal);
   target.classList.contains("hide")
@@ -42,92 +41,220 @@ const toggleModal = (modal) => {
  * Here status 0 means "Incomplete" and 1 means "Completed"
  */
 
-const createNoteSaveBtn = document.getElementById("createNoteSaveBtn");
+const initializeNoteData = (id) => {
+  const localStorageData = JSON.parse(
+    localStorage.getItem(localStorageNotesId)
+  );
 
-createNoteSaveBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+  const currentNote = localStorageData.find((note) => {
+    return note.id === id;
+  });
+  console.log(currentNote);
+  document.getElementById("currentNoteId").value = currentNote.id;
+  document.getElementById("editNoteTitle").value = currentNote.title;
+  document.getElementById("editNoteDescription").value =
+    currentNote.description;
+  return;
+};
 
-  const title = document.querySelector("#createNoteTitle").value;
-  const description = document.querySelector("#createNoteDescription").value;
+const initializeEventListeners = () => {
+  const modalToggleBtns = document.querySelectorAll(
+    'button[data-toggle="modal"]'
+  );
 
-  if (title === "" || !title || title === null) {
-    document.querySelector("#createNoteTitle + .validation-msg").innerText =
-      "*Title is required!";
-    document
-      .querySelector("#createNoteTitle")
-      .addEventListener("input", (e) => {
-        if (
-          e.target.value === "" ||
-          !e.target.value ||
-          e.target.value === null
-        ) {
-          return (document.querySelector(
-            "#createNoteTitle + .validation-msg"
-          ).innerText = "*Title is required!");
-        } else {
-          return (document.querySelector(
-            "#createNoteTitle + .validation-msg"
-          ).innerText = "");
-        }
-      });
-    return;
-  }
-  document.querySelector("#createNoteTitle + .validation-msg").innerText = "";
+  modalToggleBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const clickedBtn = e.target;
+      const modalId = clickedBtn.dataset.target;
+      toggleModal(modalId);
+      return;
+    });
+  });
 
-  if (description === "" || !description || description === null) {
+  const createNoteSaveBtn = document.getElementById("createNoteSaveBtn");
+
+  createNoteSaveBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const title = document.querySelector("#createNoteTitle").value;
+    const description = document.querySelector("#createNoteDescription").value;
+
+    if (title === "" || !title || title === null) {
+      document.querySelector("#createNoteTitle + .validation-msg").innerText =
+        "*Title is required!";
+      document
+        .querySelector("#createNoteTitle")
+        .addEventListener("input", (e) => {
+          if (
+            e.target.value === "" ||
+            !e.target.value ||
+            e.target.value === null
+          ) {
+            return (document.querySelector(
+              "#createNoteTitle + .validation-msg"
+            ).innerText = "*Title is required!");
+          } else {
+            return (document.querySelector(
+              "#createNoteTitle + .validation-msg"
+            ).innerText = "");
+          }
+        });
+      return;
+    }
+    document.querySelector("#createNoteTitle + .validation-msg").innerText = "";
+
+    if (description === "" || !description || description === null) {
+      document.querySelector(
+        "#createNoteDescription + .validation-msg"
+      ).innerText = "*Description is required!";
+      document
+        .querySelector("#createNoteDescription")
+        .addEventListener("input", (e) => {
+          if (
+            e.target.value === "" ||
+            !e.target.value ||
+            e.target.value === null
+          ) {
+            return (document.querySelector(
+              "#createNoteDescription + .validation-msg"
+            ).innerText = "*Description is required!");
+          } else {
+            return (document.querySelector(
+              "#createNoteDescription + .validation-msg"
+            ).innerText = "");
+          }
+        });
+      return;
+    }
     document.querySelector(
       "#createNoteDescription + .validation-msg"
-    ).innerText = "*Description is required!";
-    document
-      .querySelector("#createNoteDescription")
-      .addEventListener("input", (e) => {
-        if (
-          e.target.value === "" ||
-          !e.target.value ||
-          e.target.value === null
-        ) {
-          return (document.querySelector(
-            "#createNoteDescription + .validation-msg"
-          ).innerText = "*Description is required!");
-        } else {
-          return (document.querySelector(
-            "#createNoteDescription + .validation-msg"
-          ).innerText = "");
-        }
-      });
-    return;
-  }
-  document.querySelector("#createNoteDescription + .validation-msg").innerText =
-    "";
+    ).innerText = "";
 
-  const noteData = {
-    id: Date.now().toString(),
-    title: title,
-    description: description,
-    created: {
-      year: dateObj.getFullYear(),
-      month: dateObj.getMonth(),
-      day: dateObj.getDate(),
-    },
-    status: 0,
-  };
-  const prevData = localStorage.getItem(localStorageNotesId);
+    const noteData = {
+      id: Date.now().toString(),
+      title: title,
+      description: description,
+      created: {
+        year: dateObj.getFullYear(),
+        month: dateObj.getMonth(),
+        day: dateObj.getDate(),
+      },
+      status: 0,
+    };
+    const prevData = localStorage.getItem(localStorageNotesId);
 
-  if (prevData) {
+    if (prevData) {
+      const prevDataArr = JSON.parse(prevData);
+
+      prevDataArr.push(noteData);
+
+      localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
+      listAllNotes();
+      return toggleModal("createNoteFormModal");
+    }
+
+    const data = [noteData];
+    localStorage.setItem(localStorageNotesId, JSON.stringify(data));
+    listAllNotes();
+    return toggleModal("createNoteFormModal");
+  });
+
+  const editNoteBtns = document.querySelectorAll(".edit-btn");
+  editNoteBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const targetNote = e.target.dataset.id;
+      initializeNoteData(targetNote);
+    });
+  });
+
+  const editNoteSaveBtn = document.getElementById("editNoteSaveBtn");
+  editNoteSaveBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const title = document.querySelector("#editNoteTitle").value;
+    const description = document.querySelector("#editNoteDescription").value;
+    const id = document.getElementById("currentNoteId").value;
+
+    if (title === "" || !title || title === null) {
+      document.querySelector("#editNoteTitle + .validation-msg").innerText =
+        "*Title is required!";
+      document
+        .querySelector("#editNoteTitle")
+        .addEventListener("input", (e) => {
+          if (
+            e.target.value === "" ||
+            !e.target.value ||
+            e.target.value === null
+          ) {
+            return (document.querySelector(
+              "#editNoteTitle + .validation-msg"
+            ).innerText = "*Title is required!");
+          } else {
+            return (document.querySelector(
+              "#editNoteTitle + .validation-msg"
+            ).innerText = "");
+          }
+        });
+      return;
+    }
+    document.querySelector("#editNoteTitle + .validation-msg").innerText = "";
+
+    if (description === "" || !description || description === null) {
+      document.querySelector(
+        "#editNoteDescription + .validation-msg"
+      ).innerText = "*Description is required!";
+      document
+        .querySelector("#editNoteDescription")
+        .addEventListener("input", (e) => {
+          if (
+            e.target.value === "" ||
+            !e.target.value ||
+            e.target.value === null
+          ) {
+            return (document.querySelector(
+              "#editNoteDescription + .validation-msg"
+            ).innerText = "*Description is required!");
+          } else {
+            return (document.querySelector(
+              "#editNoteDescription + .validation-msg"
+            ).innerText = "");
+          }
+        });
+      return;
+    }
+    document.querySelector("#editNoteDescription + .validation-msg").innerText =
+      "";
+
+    // const noteData = {
+    //   id: document.getElementById("currentNoteId").value,
+    //   title: title,
+    //   description: description,
+    //   created: {
+    //     year: dateObj.getFullYear(),
+    //     month: dateObj.getMonth(),
+    //     day: dateObj.getDate(),
+    //   },
+    //   status: 0,
+    // };
+    const prevData = localStorage.getItem(localStorageNotesId);
     const prevDataArr = JSON.parse(prevData);
 
-    prevDataArr.push(noteData);
+    const currentNote = prevDataArr.find((note) => {
+      return note.id === id;
+    });
+    const currentNoteIndex = prevDataArr.indexOf(currentNote);
+
+    prevDataArr[currentNoteIndex].title = title;
+    prevDataArr[currentNoteIndex].description = description;
+    prevDataArr[currentNoteIndex].created.year = dateObj.getFullYear();
+    prevDataArr[currentNoteIndex].created.month = dateObj.getMonth();
+    prevDataArr[currentNoteIndex].created.day = dateObj.getDate();
 
     localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
     listAllNotes();
-    return toggleModal("createNoteFormModal");
-  }
-
-  const data = [noteData];
-  localStorage.setItem(localStorageNotesId, JSON.stringify(data));
-  listAllNotes();
-  return toggleModal("createNoteFormModal");
-});
+    return toggleModal("editNoteFormModal");
+  });
+};
 
 const listAllNotes = () => {
   const allNotesFromLocalStorage = localStorage.getItem(localStorageNotesId);
@@ -174,127 +301,9 @@ const listAllNotes = () => {
       </div>
       `;
     });
-    return;
+    return initializeEventListeners();
   }
   notesContainer.innerHTML = `<h3>No Notes Found.</h3>`;
-  return;
+  return initializeEventListeners();
 };
 listAllNotes();
-
-const initializeNoteData = (id) => {
-  const localStorageData = JSON.parse(
-    localStorage.getItem(localStorageNotesId)
-  );
-
-  const currentNote = localStorageData.find((note) => {
-    return note.id === id;
-  });
-  console.log(currentNote);
-  document.getElementById("currentNoteId").value = currentNote.id;
-  document.getElementById("editNoteTitle").value = currentNote.title;
-  document.getElementById("editNoteDescription").value =
-    currentNote.description;
-  return;
-};
-
-const editNoteBtns = document.querySelectorAll(".edit-btn");
-editNoteBtns.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const targetNote = e.target.dataset.id;
-    initializeNoteData(targetNote);
-  });
-});
-
-const editNoteSaveBtn = document.getElementById("editNoteSaveBtn");
-editNoteSaveBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const title = document.querySelector("#editNoteTitle").value;
-  const description = document.querySelector("#editNoteDescription").value;
-  const id = document.getElementById("currentNoteId").value;
-
-  if (title === "" || !title || title === null) {
-    document.querySelector("#editNoteTitle + .validation-msg").innerText =
-      "*Title is required!";
-    document.querySelector("#editNoteTitle").addEventListener("input", (e) => {
-      if (e.target.value === "" || !e.target.value || e.target.value === null) {
-        return (document.querySelector(
-          "#editNoteTitle + .validation-msg"
-        ).innerText = "*Title is required!");
-      } else {
-        return (document.querySelector(
-          "#editNoteTitle + .validation-msg"
-        ).innerText = "");
-      }
-    });
-    return;
-  }
-  document.querySelector("#editNoteTitle + .validation-msg").innerText = "";
-
-  if (description === "" || !description || description === null) {
-    document.querySelector("#editNoteDescription + .validation-msg").innerText =
-      "*Description is required!";
-    document
-      .querySelector("#editNoteDescription")
-      .addEventListener("input", (e) => {
-        if (
-          e.target.value === "" ||
-          !e.target.value ||
-          e.target.value === null
-        ) {
-          return (document.querySelector(
-            "#editNoteDescription + .validation-msg"
-          ).innerText = "*Description is required!");
-        } else {
-          return (document.querySelector(
-            "#editNoteDescription + .validation-msg"
-          ).innerText = "");
-        }
-      });
-    return;
-  }
-  document.querySelector("#editNoteDescription + .validation-msg").innerText =
-    "";
-
-  // const noteData = {
-  //   id: document.getElementById("currentNoteId").value,
-  //   title: title,
-  //   description: description,
-  //   created: {
-  //     year: dateObj.getFullYear(),
-  //     month: dateObj.getMonth(),
-  //     day: dateObj.getDate(),
-  //   },
-  //   status: 0,
-  // };
-  const prevData = localStorage.getItem(localStorageNotesId);
-  const prevDataArr = JSON.parse(prevData);
-
-  const currentNote = prevDataArr.find((note) => {
-    return note.id === id;
-  });
-  const currentNoteIndex = prevDataArr.indexOf(currentNote);
-  
-  prevDataArr[currentNoteIndex].title = title;
-  prevDataArr[currentNoteIndex].description = description;
-  prevDataArr[currentNoteIndex].created.year = dateObj.getFullYear();
-  prevDataArr[currentNoteIndex].created.month = dateObj.getMonth();
-  prevDataArr[currentNoteIndex].created.day = dateObj.getDate();
-  
-  localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
-  listAllNotes();
-  return toggleModal("editNoteFormModal");
-});
-
-const modalToggleBtns = document.querySelectorAll(
-  'button[data-toggle="modal"]'
-);
-
-modalToggleBtns.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const clickedBtn = e.target;
-    const modalId = clickedBtn.dataset.target;
-    toggleModal(modalId);
-    return;
-  });
-});
