@@ -22,24 +22,8 @@ const toggleModal = (modal) => {
   if (target.dataset.form && target.classList.contains("hide")) {
     document.getElementById(target.dataset.form).reset();
   }
+  return;
 };
-
-/**
- * Expected Object
- * const note = {
- *  id: "note1"
- *  title: "Some Title",
- *  description: "Some description",
- *  created: {
- *    year: 2023,
- *    month: 7,
- *    day: 23
- *  },
- *  status: 0
- * }
- *
- * Here status 0 means "Incomplete" and 1 means "Completed"
- */
 
 const initializeNoteData = (id) => {
   const localStorageData = JSON.parse(
@@ -49,7 +33,6 @@ const initializeNoteData = (id) => {
   const currentNote = localStorageData.find((note) => {
     return note.id === id;
   });
-  console.log(currentNote);
   document.getElementById("currentNoteId").value = currentNote.id;
   document.getElementById("editNoteTitle").value = currentNote.title;
   document.getElementById("editNoteDescription").value =
@@ -67,7 +50,6 @@ const initializeEventListeners = () => {
       const clickedBtn = e.target;
       const modalId = clickedBtn.dataset.target;
       toggleModal(modalId);
-      return;
     });
   });
 
@@ -225,17 +207,6 @@ const initializeEventListeners = () => {
     document.querySelector("#editNoteDescription + .validation-msg").innerText =
       "";
 
-    // const noteData = {
-    //   id: document.getElementById("currentNoteId").value,
-    //   title: title,
-    //   description: description,
-    //   created: {
-    //     year: dateObj.getFullYear(),
-    //     month: dateObj.getMonth(),
-    //     day: dateObj.getDate(),
-    //   },
-    //   status: 0,
-    // };
     const prevData = localStorage.getItem(localStorageNotesId);
     const prevDataArr = JSON.parse(prevData);
 
@@ -253,6 +224,24 @@ const initializeEventListeners = () => {
     localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
     listAllNotes();
     return toggleModal("editNoteFormModal");
+  });
+
+  const moveNoteBtns = document.querySelectorAll('select[name="moveNote"]');
+  moveNoteBtns.forEach((btn) => {
+    btn.addEventListener("change", (e) => {
+      const prevData = localStorage.getItem(localStorageNotesId);
+      const prevDataArr = JSON.parse(prevData);
+
+      const currentNote = prevDataArr.find((note) => {
+        return note.id === e.target.id;
+      });
+      const currentNoteIndex = prevDataArr.indexOf(currentNote);
+
+      prevDataArr[currentNoteIndex].status = parseInt(e.target.value);
+
+      localStorage.setItem(localStorageNotesId, JSON.stringify(prevDataArr));
+      return listAllNotes();
+    });
   });
 };
 
@@ -293,8 +282,12 @@ const listAllNotes = () => {
           <div class="note-action">
             <label for="${note.id}">Move To:</label>
             <select name="moveNote" id="${note.id}">
-              <option value="0">Incomplete</option>
-              <option value="1">Completed</option>
+              <option value="0" ${
+                note.status === 0 && "selected"
+              }>Incomplete</option>
+              <option value="1" ${
+                note.status === 1 && "selected"
+              }>Completed</option>
             </select>
           </div>
         </div>
